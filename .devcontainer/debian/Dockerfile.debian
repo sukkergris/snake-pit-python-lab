@@ -38,6 +38,11 @@ ARG TARGETARCH
 ARG USER_BIN=/usr/local/bin
 
 # -fsSL: (f)ail on HTTP errors, (s)ilent, (S)how error messages, fo(L)low redirects
+# Task runner (Taskfile.yml)
+ARG TASK_VERSION=3.54.0
+RUN curl -fsSL "https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_${TARGETARCH}.tar.gz" \
+    | tar -xz -C ${USER_BIN} task
+
 # Favorite shell text editor nvim
 ARG NVIM_VERSION=0.12.6
 RUN NVIM_ARCH="$([ "$TARGETARCH" = amd64 ] && echo x86_64 || echo "$TARGETARCH")" \
