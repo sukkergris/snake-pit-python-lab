@@ -55,3 +55,10 @@ COPY --from=ghcr.io/astral-sh/uv:0.13.9 /uv /uvx /usr/local/bin/
 # The workspace is a bind mount on another filesystem than uv's cache, so
 # hardlinks fail. Copy instead, which also silences uv's warning about it.
 ENV UV_LINK_MODE=copy
+
+RUN apt-get update && apt-get install -y --no-install-recommends locales \
+    && sed -i 's/^# *en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen \
+    && locale-gen \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
